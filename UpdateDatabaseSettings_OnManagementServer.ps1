@@ -11,10 +11,10 @@ configurations
 ######>
 
 ## Replace these values with the appropriate ones for your environment
-$OpsDBName = "OperationsManager19"
+$OpsDBName = "OperationsManager"
 $OpsDBServer = "SQL.contoso.com"
 
-$DWDBName = "OperationsManagerDW19"
+$DWDBName = "OperationsManagerDW"
 $DWDBServer = "SQL.contoso.com"
 
 ## Stop Services

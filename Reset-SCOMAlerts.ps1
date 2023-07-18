@@ -8,7 +8,7 @@
 
 Import-Module OperationsManager
 
-$alertName = "Failed to Connect to Computer" ## Change this to the name of the alert that you want to reset, one at a time only
+$alertName = "Failed to Connect to Computer" ## Change this to the name of the alert that you want to reset, one at a time only, change to * if you want all the alerts
 $alertCriteria = "ResolutionState=0 AND Name='$($alertName)'" ## This sets the Resolution state to "New" (0) and to the alert name specified earlier
 $closureComment = "Alert closed via script" ## Set a comment here as to why or how this alert was closed
 

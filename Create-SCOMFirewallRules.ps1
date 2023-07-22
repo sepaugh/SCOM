@@ -97,7 +97,7 @@ New-NetFirewallRule `
     -Group "SCOM" `
     -Direction Outbound `
     -Protocol TCP `
-    -Local 22 `
+    -LocalPort 22 `
     -Action Allow 
 
 ## Management Server << Operations Console
@@ -106,7 +106,7 @@ New-NetFirewallRule `
     -Group "SCOM" `
     -Direction Inbound `
     -Protocol TCP `
-    -Local 5724 `
+    -LocalPort 5724 `
     -Action Allow 
 
 ## Connected Management Server (Local) >> Connected Management SErver (Connected)

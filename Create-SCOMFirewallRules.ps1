@@ -10,6 +10,7 @@
     These commands are provided without warranty and should be tested and vetted by your organization before 
     production deployments. 
 
+    If using a custom SQL Port, make sure to change 1433 to the custom port number.
 
 #############>
 

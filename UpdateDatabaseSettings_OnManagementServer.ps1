@@ -56,6 +56,7 @@ $ConfigNode = $ConfigFile.SelectNodes("//Category[3]")
 $ConfigFile | ForEach-Object { 
     $ConfigNode.Setting[0].Value = $OpsDBServer
     $ConfigNode.Setting[1].Value = $OpsDBName
+    $ConfigNode.Setting[12].OperationTimeout.DefaultTimeoutSeconds = 300
 }
 
 ## Updating the ConfigStore Category
@@ -63,6 +64,7 @@ $ConfigNode = $ConfigFile.SelectSingleNode("//Category[4]")
 $ConfigFile | ForEach-Object { 
     $ConfigNode.Setting[0].Value = $OpsDBServer
     $ConfigNode.Setting[1].Value = $OpsDBName
+    $ConfigNode.Setting[10].OperationTimeout.DefaultTimeoutSeconds = 300
 }
 
 ## Save Config file back to disk

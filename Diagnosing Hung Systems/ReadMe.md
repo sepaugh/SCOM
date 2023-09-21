@@ -1,6 +1,6 @@
 # Trying to diagnose "hung" client systems
 
-This may be a bit of a stretch, and will take some setup, but it may help in figuring out what's going on right before a client system hangs. And by the system hanging, I mean it's responsive to Ping, sometimes the hosted application still works, but you can't RDP to it and we're not getting any alerts. Anything beyond what's outlined here will need to be manually observed on your end. This here is simply something I put together a while back to help diagnose this scenario, and is to be used without warranty and at your own peril.
+This may be a bit of a stretch, and will take some setup, but it may help in figuring out what's going on right before a client system hangs. And by the system hanging, I mean it's responsive to Ping, sometimes the hosted application still works, but you can't RDP to it and we're not getting any alerts. Anything beyond what's outlined here will need to be manually observed on your end. This here is simply something I put together a while back to help diagnose this scenario on domain controllers, but should be able to be used on any Windows client, and is to be used without warranty and at your own peril.
 
 Know that the actual diagnostic tasks will incur additional resource load on the targeted servers when running, this is the process and performance monitor captures specifically.
 
@@ -9,19 +9,19 @@ NOTE - I have not had a chance to fully test this process out, good luck :smile:
 ## Parts of the process:
 
   - SCOM Alert Canary
-    - A SCOM alert needs to be triggered based on an event in the event log to alert us to incoming issues with system resources -- I must stress that there are lots of issues that I see in the event logs where we're not fully reading the event log as things keep getting dropped due to resource issues, so this may not be the most reliable Canary, but we can set it up anyway. 
+    - A SCOM alert needs to be triggered based on an event in the event log to alert us to incoming issues with system resources -- this may not be the most reliable Canary, but we can set it up anyway. 
     - This alert will be triggered based on Event ID 2004 in the System event log, where Windows diagnoses a low virtual memory condition
     - This alert is disabled by default and will need to be enabled for the affected machines to monitor
     - This alert will need to be configured 
 
   - Windows Performance Monitor
-    - This will be setup on all affected domain controllers using Logman
+    - This will be setup on all affected clients using Logman
     - This will run when the alert is triggered up to a specified file size
     - This will need to be manually stopped, if the server does not get restarted
 
   - Process Monitor (ProcMon)
     - [Process Monitor - Sysinternals | Microsoft Learn](https://learn.microsoft.com/en-us/sysinternals/downloads/procmon)
-    - This application will need to be downloaded and stored in the exact same location on all DCs that we're testing this on
+    - This application will need to be downloaded and stored in the exact same location on all clients that we're testing this on
     - We will also need to have a Procmon configuration file present in the same location on all systems so that we can load it
     - When the alert is triggered, we'll try to start Procmon so it can capture, rather than have it run constantly - although we can set it to do so
 
@@ -86,7 +86,11 @@ In your SCOM console:
 ## On the Client Machine
 All actions taken below will need to be performed on all servers that we're trying to diagnose.
 
-1. Create this folder path: `D:\Temp\HungSystemDiagnostics`
+1. Create this folder path: `C:\Temp\HungSystemDiagnostics`
+
+> [!IMPORTANT]
+> It must be this path as it's hardcoded into the MP - change the MP if you want to change the path
+
 2. Download a copy of "Procmon.exe" from Sysinternals - Process Monitor - Sysinternals | Microsoft Learn
   a. This will be in a .zip folder, extract the contents
 3. Download a copy of "ProcmonConfiguration.pmc"

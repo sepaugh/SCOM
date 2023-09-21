@@ -111,7 +111,7 @@ All actions taken below will need to be performed on all servers that we're tryi
 
 - If all works like it's supposed to, then when we get a 2004 event in the System event log with the "Microsoft-Windows-Resource-Exhaustion-Detector" source, an alert should be triggered in SCOM automatically, and a notification sent out to interested parties.
 - If/Once the alert is triggered, there are two Diagnostic tasks that should be started:
-    - Procmon should be started, and will write it's log to the temp directory created earlier: `D:\Temp\HungSystemDiagnostics`
+    - Procmon should be started, and will write it's log to the temp directory created earlier: `C:\Temp\HungSystemDiagnostics`
     - Perfmon should be started, and will write to the directory shown earlier in the PerfMon gui (which should be something like `%systemdrive%\PerfLogs\<UserName>`)
 - Both of those diagnostic tasks will run for a while, however will cutoff before they get too large 
     - Procmon = 1 GB

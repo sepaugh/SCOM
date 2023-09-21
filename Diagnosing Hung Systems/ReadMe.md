@@ -1,4 +1,4 @@
-# Diagnostics
+# Trying to diagnose "hung" client systems
 
 This may be a bit of a stretch, and will take some setup, but it may help in figuring out what's going on right before a client system hangs. And by the system hanging, I mean it's responsive to Ping, sometimes the hosted application still works, but you can't RDP to it and we're not getting any alerts. Anything beyond what's outlined here will need to be manually observed on your end. This here is simply something I put together a while back to help diagnose this scenario, and is to be used without warranty and at your own peril.
 

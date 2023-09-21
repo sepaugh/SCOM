@@ -89,7 +89,7 @@ All actions taken below will need to be performed on all servers that we're tryi
 1. Create this folder path: `C:\Temp\HungSystemDiagnostics`
 
 > [!IMPORTANT]
-> It must be this path as it's hardcoded into the MP - change the MP if you want to change the path
+> It must be this path (`C:\Temp\HungSystemDiagnostics`) as it's hardcoded into the MP - change the MP if you want to change the path
 
 2. Download a copy of "Procmon.exe" from Sysinternals - Process Monitor - Sysinternals | Microsoft Learn
   a. This will be in a .zip folder, extract the contents

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?><ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>HungSystemDiagnostics</ID>
+      <Version>1.0.0.0</Version>
+    </Identity>
+    <Name>HungSystemDiagnostics</Name>
+    <References>
+      <Reference Alias="MicrosoftWindowsLibrary7585010">
+        <ID>Microsoft.Windows.Library</ID>
+        <Version>7.5.8501.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="SystemLibrary7585010">
+        <ID>System.Library</ID>
+        <Version>7.5.8501.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="SystemCenter">
+        <ID>Microsoft.SystemCenter.Library</ID>
+        <Version>7.0.8448.6</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Health">
+        <ID>System.Health.Library</ID>
+        <Version>7.0.8443.6</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" Accessibility="Public" Enabled="false" Target="MicrosoftWindowsLibrary7585010!Microsoft.Windows.Server.Computer" ParentMonitorID="Health!System.Health.PerformanceState" Remotable="true" Priority="Normal" TypeID="MicrosoftWindowsLibrary7585010!Microsoft.Windows.SingleEventLogManualReset2StateMonitorType" ConfirmDelivery="true">
+        <Category>Custom</Category>
+        <AlertSettings AlertMessage="UIGeneratedMonitora61c7a646558436b9708df69f7308f47_AlertMessageResourceID">
+          <AlertOnState>Error</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>High</AlertPriority>
+          <AlertSeverity>Error</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Data[Default='']/Context/EventDescription$</AlertParameter1>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="UIGeneratedOpStateIddd414407e03d47c998b4486a418cf9c7" MonitorTypeStateID="ManualResetEventRaised" HealthState="Success" />
+          <OperationalState ID="UIGeneratedOpStateId1ec8a6138af84249ac5d613a86f817be" MonitorTypeStateID="EventRaised" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <ComputerName>$Target/Property[Type="MicrosoftWindowsLibrary7585010!Microsoft.Windows.Computer"]/NetworkName$</ComputerName>
+          <LogName>System</LogName>
+          <Expression>
+            <And>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="UnsignedInteger">EventDisplayNumber</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="UnsignedInteger">2004</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">PublisherName</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">Microsoft-Windows-Resource-Exhaustion-Detector</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </And>
+          </Expression>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+    <Diagnostics>
+      <Diagnostic ID="MomUIGenaratedDiagnostic2aff2be9522246faa7ee67b49ee4e239" Accessibility="Public" Enabled="true" Target="MicrosoftWindowsLibrary7585010!Microsoft.Windows.Server.Computer" Monitor="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" ExecuteOnState="Error" Remotable="true" Timeout="300">
+        <Category>Custom</Category>
+        <ProbeAction ID="MomUIGenaratedModuled8252389d65f48eab8fa6d21d31597e1" TypeID="SystemLibrary7585010!System.CommandExecuterProbe">
+          <ApplicationName>"C:\Windows\System32\cmd.exe"</ApplicationName>
+          <WorkingDirectory>C:\Windows\System32</WorkingDirectory>
+          <CommandLine>logman.exe start HungSystemDiagnostics</CommandLine>
+          <TimeoutSeconds>90</TimeoutSeconds>
+          <RequireOutput>true</RequireOutput>
+        </ProbeAction>
+      </Diagnostic>
+      <Diagnostic ID="MomUIGenaratedDiagnostic693b1ce48ccb410387725224a2a473c3" Accessibility="Public" Enabled="true" Target="MicrosoftWindowsLibrary7585010!Microsoft.Windows.Server.Computer" Monitor="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" ExecuteOnState="Error" Remotable="true" Timeout="300">
+        <Category>Custom</Category>
+        <ProbeAction ID="MomUIGenaratedModulefa5b4430982a4377b3311544b90b4992" TypeID="SystemLibrary7585010!System.CommandExecuterProbe">
+          <ApplicationName>C:\Temp\HungSystemDiagnostics\Procmon.exe</ApplicationName>
+          <WorkingDirectory>C:\Temp\HungSystemDiagnostics\</WorkingDirectory>
+          <CommandLine>/AcceptEula /Minimized /BackingFile C:\Temp\HungSystemDiagnostics\ProcmonCapture.pml /LoadConfig C:\Temp\HungSystemDiagnostics\ProcmonConfiguration.pmc /Quiet</CommandLine>
+          <TimeoutSeconds>600</TimeoutSeconds>
+          <RequireOutput>true</RequireOutput>
+        </ProbeAction>
+      </Diagnostic>
+    </Diagnostics>
+    <Overrides>
+      <MonitorPropertyOverride ID="Alias3ab26f2ec2bc4cc7b7c322f031baef7dOverrideForMonitorUIGeneratedMonitora61c7a646558436b9708df69f7308f47ForContextMicrosoftWindowsComputer" Context="MicrosoftWindowsLibrary7585010!Microsoft.Windows.Computer" ContextInstance="1b2e7950-8804-7fe2-5f54-dda78dd930f2" Enforced="false" Monitor="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" Property="Enabled">
+        <Value>true</Value>
+      </MonitorPropertyOverride>
+    </Overrides>
+  </Monitoring>
+  <Presentation>
+    <Folders>
+      <Folder ID="Folder_0c7c78c276ed4ba2b2554f0d1c485c6f" Accessibility="Public" ParentFolder="SystemCenter!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
+    </Folders>
+    <StringResources>
+      <StringResource ID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47_AlertMessageResourceID" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="false">
+      <DisplayStrings>
+        <DisplayString ElementID="HungSystemDiagnostics">
+          <Name>HungSystemDiagnostics</Name>
+          <Description>This management pack was created try to help diagnose client machiens that are hung up and unresponsive, generally due to memory issues</Description>
+        </DisplayString>
+        <DisplayString ElementID="Folder_0c7c78c276ed4ba2b2554f0d1c485c6f">
+          <Name>HungSystemDiagnostics</Name>
+        </DisplayString>
+        <DisplayString ElementID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47">
+          <Name>Resource Exhaustion</Name>
+          <Description>This alert was created to help diagnose resource exhaustion issues on client machines</Description>
+        </DisplayString>
+        <DisplayString ElementID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" SubElementID="UIGeneratedOpStateIddd414407e03d47c998b4486a418cf9c7">
+          <Name>Manual Reset</Name>
+        </DisplayString>
+        <DisplayString ElementID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47" SubElementID="UIGeneratedOpStateId1ec8a6138af84249ac5d613a86f817be">
+          <Name>Event Raised</Name>
+        </DisplayString>
+        <DisplayString ElementID="UIGeneratedMonitora61c7a646558436b9708df69f7308f47_AlertMessageResourceID">
+          <Name>CRITICAL - Resource Exhaustion Detected</Name>
+          <Description>Event Description: {0}</Description>
+        </DisplayString>
+        <DisplayString ElementID="MomUIGenaratedDiagnostic2aff2be9522246faa7ee67b49ee4e239">
+          <Name>Start PerfMon</Name>
+          <Description>This will kick off a Logman instance to capture performance data</Description>
+        </DisplayString>
+        <DisplayString ElementID="MomUIGenaratedDiagnostic693b1ce48ccb410387725224a2a473c3">
+          <Name>Start Procmon</Name>
+          <Description>This task will start a Procmon trace that will capture up to 1GB of data at a time until it is stopped.</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPack>

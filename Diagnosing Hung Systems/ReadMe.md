@@ -91,10 +91,9 @@ All actions taken below will need to be performed on all servers that we're tryi
 > [!IMPORTANT]
 > It must be this path (`C:\Temp\HungSystemDiagnostics`) as it's hardcoded into the MP - change the MP if you want to change the path
 
-2. Download a copy of "Procmon.exe" from Sysinternals - Process Monitor - Sysinternals | Microsoft Learn
-  a. This will be in a .zip folder, extract the contents
-3. Download a copy of "ProcmonConfiguration.pmc"
-4. Add the .exe and .pmc files to the folder created earlier
+2. Download a copy of "Procmon.exe" from Sysinternals - [Process Monitor - Sysinternals | Microsoft Learn](https://learn.microsoft.com/en-us/sysinternals/downloads/procmon)
+	- This will be in a .zip folder, extract the contents to `C:\Temp\HungSystemDiagnostics`
+3. Download a copy of "ProcmonConfiguration.pmc" and place it in `C:\Temp\HungSystemDiagnostics`
 5. We now need to create our Windows Performance Monitor counter so that we can capture our data
     - Run the below as an administrator in CMD or PowerShell, this will create out counter template to run later
 

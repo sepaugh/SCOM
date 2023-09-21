@@ -1,6 +1,8 @@
 # Trying to diagnose "hung" client systems
 
-This may be a bit of a stretch, and will take some setup, but it may help in figuring out what's going on right before a client system hangs. And by the system hanging, I mean it's responsive to Ping, sometimes the hosted application still works, but you can't RDP to it and we're not getting any alerts. Anything beyond what's outlined here will need to be manually observed on your end. This here is simply something I put together a while back to help diagnose this scenario on domain controllers, but should be able to be used on any Windows client, and is to be used without warranty and at your own peril.
+And by "hung", I mean it's responsive to Ping, sometimes the hosted application still works, but you can't RDP to it and we're not getting any alerts.
+
+This may be a bit of a stretch, and will take some setup, but it may help in figuring out what's going on right before a client system hangs. Anything beyond what's outlined here will need to be manually observed on your end. This here is simply something I put together a while back to help diagnose this scenario on domain controllers, but should be able to be used on any Windows client, and is to be used without warranty and at your own peril.
 
 Know that the actual diagnostic tasks will incur additional resource load on the targeted servers when running, this is the process and performance monitor captures specifically.
 

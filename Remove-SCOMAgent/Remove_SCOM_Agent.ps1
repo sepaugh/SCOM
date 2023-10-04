@@ -43,7 +43,7 @@
 Prerequisites 
 
 #############################>
-#Requires -Version 4
+#Requires -Version 3
 #Requires -RunAsAdministrator
 $todayInTime = (Get-Date).ToString('yyyyMMdd')
 

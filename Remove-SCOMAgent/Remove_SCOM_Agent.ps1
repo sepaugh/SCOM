@@ -221,6 +221,11 @@ InstalledOn: $installDateTime
     } else {
         Write-Output "`tSuccessfully removed 'System Center Management APM' service"
     }
+    if ((Start-Process -NoNewWindow -wait -Passthru sc.exe "delete `"MOMAgentInstaller`"").ExitCode -notlike "0") { 
+        Write-Output "`tCould not remove 'MOMAgentInstaller' service, likely already removed or didn't exist - error code $($LastExitCode)"
+    } else {
+        Write-Output "`tSuccessfully removed 'MOMAgentInstaller' service"
+    }
 
     # Unregister Performance Counters
     Write-Output "`nUnregistering Performance Counters"

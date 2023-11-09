@@ -252,7 +252,7 @@ Operations Console Servers
 New-NetFirewallRule `
     -DisplayName "SCOM Console Connection" `
     -Group "SCOM" `
-    -Direction Inbound `
+    -Direction Outbound `
     -Protocol TCP `
     -LocalPort 5724 `
     -Action Allow 

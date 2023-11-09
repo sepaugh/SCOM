@@ -248,6 +248,15 @@ Operations Console Servers
 ####>
 #region console
 
+## Operations Console >> Management Group
+New-NetFirewallRule `
+    -DisplayName "SCOM Console Connection" `
+    -Group "SCOM" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort 5724 `
+    -Action Allow 
+
 ## Operations Console (Reports) >> SQL Reporting Services
 New-NetFirewallRule `
     -DisplayName "SCOM Operations Console Reports" `

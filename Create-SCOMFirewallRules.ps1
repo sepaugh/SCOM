@@ -89,7 +89,7 @@ New-NetFirewallRule `
     -Group "SCOM" `
     -Direction Outbound `
     -Protocol TCP `
-    -Local 1270 `
+    -LocalPort 1270 `
     -Action Allow 
 
 ## Management Server >> Unix/Linux Agent Install/Upgrade/Remove

@@ -12,7 +12,7 @@ $alertName = "Failed to Connect to Computer" ## Change this to the name of the a
 $alertCriteria = "ResolutionState=0 AND Name='$($alertName)'" ## This sets the Resolution state to "New" (0) and to the alert name specified earlier
 $closureComment = "Alert closed via script" ## Set a comment here as to why or how this alert was closed
 
-$alertList = Get-SCOMAlert -Criteria $alertCriteria ## Gets list of alerts meeting above criteria
+$alertList = Get-SCOMAlert -Criteria $alertCriteria ## Gets list of alerts meeting above criteria, if you just want to get /everything/, throw a # before -Criteria
 Write-Host $alertList.Count " Monitors to be reset"
 
 $i = 0 ## Used to indicate progress, leave at zero
@@ -20,7 +20,7 @@ $i = 0 ## Used to indicate progress, leave at zero
 ForEach ($alert in $alertList)
 {
     $i++
-    Write-Progress -activity "Closing alert/resetting health state for '$($alert.Name)' on target '$($alert.MonitoringObjectPath)'" -status "Please wait..." -percentComplete (($i / $alertList.Count)  * 100)
+    Write-Progress -activity "Closing alert/resetting health state for '$($alert.Name)' on target '$($alert.MonitoringObjectPath)'" -status "Now Serving... #$($i) of $($alertList.Count)" -percentComplete (($i / $alertList.Count)  * 100)
     If ($alert.IsMonitorAlert -eq $false) {
         
         $alert | Resolve-SCOMAlert -Comment $closureComment -Verbose
@@ -38,7 +38,5 @@ ForEach ($alert in $alertList)
             $monitoringObject.ResetMonitoringState($monitor)
         }
     }
-    Write-Progress -activity "Closing alert '$($alert.Name)' on target '$($alert.MonitoringObjectPath)'" -status "Closed alert #$i of $($alertList.Count)" -percentComplete (($i / $alertList.Count)  * 100)
-    
 }
 Write-Host "Completed - $($alertList.Count) Alerts Closed" -ForegroundColor Green

@@ -134,7 +134,7 @@ Function Remove-SCOMAgent {
         [pscustomobject]@{Version='SCOM 2019';      GUID='{CEB9E45B-2152-4C10-A022-0825B53B632F}'}, # Version 10.19.x.x
         [pscustomobject]@{Version='SCOM 2022';      GUID='{382C3EC9-20AD-4E09-A6D6-8E34CF3E0586}'}, # Version 10.22.x.x
         # The Azure MMA product code changes every time they release an update, which is often, so we can't have a static GUID here
-        [pscustomobject]@{Version='Azure';          GUID=(Get-ChildItem -Path "Registry::HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" -Recurse -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object {($_.DisplayName -like "*Microsoft Monitoring Agent*") -and ($_.DisplayVersion -like "10.20*")}).PSChildName} 
+        [pscustomobject]@{Version='Azure LA';       GUID=(Get-ChildItem -Path "Registry::HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" -Recurse -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object {($_.DisplayName -like "*Microsoft Monitoring Agent*") -and ($_.DisplayVersion -like "10.20*")}).PSChildName} 
     )
 
     # Set installed agent version defaults

@@ -1,4 +1,4 @@
-Function Get-MSSupportEventLogs {
+Function Get-SCOMSupportEventLogs {
 ## Get Event Logs
 #Requires -RunAsAdministrator
 
@@ -7,7 +7,7 @@ $logs = @( "Application", "System", "Operations Manager" ) # Add Name of the Log
 $date = $(Get-Date -Format yyyyMMdd)
 
 # We're going to create a temp directory in the user folder for this
-$tempDir = "$($env:TEMP)\MSSupport-$($date)"
+$tempDir = "$($env:TEMP)\SCOMSupport-$($date)"
 If (Test-Path ($tempDir)) { Remove-Item  $tempDir -Force -Recurse | Out-Null; }
 New-Item -ItemType Directory -Path $tempDir -ErrorAction SilentlyContinue | Out-Null;
 
@@ -68,13 +68,13 @@ ForEach ($logFileName in $logs) {
 
 ## Compress and Archive results
 Write-Host "`nArchiving output"
-Compress-Archive -Path $TempDir\* -DestinationPath "$TempDir\MSSupport-EventLogs-$($Env:Computername)-$($date).zip" -CompressionLevel Optimal | Out-Null;
+Compress-Archive -Path $TempDir\* -DestinationPath "$TempDir\SCOMSupport-EventLogs-$($Env:Computername)-$($date).zip" -CompressionLevel Optimal | Out-Null;
 
 ## Cleanup
 Get-ChildItem -Path $tempDir -Exclude *.zip | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-Write-Host "`nDone - output logs are located here: $TempDir\MSSupport-EventLogs-$($Env:Computername)-$($date).zip" -ForegroundColor Green;
+Write-Host "`nDone - output logs are located here: $TempDir\SCOMSupport-EventLogs-$($Env:Computername)-$($date).zip" -ForegroundColor Green;
 
 ## Show user the output file
 Start $TempDir
 }
-Get-MSSupportEventLogs
+Get-SCOMSupportEventLogs

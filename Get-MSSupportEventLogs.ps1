@@ -11,7 +11,41 @@ $tempDir = "$($env:TEMP)\MSSupport-$($date)"
 If (Test-Path ($tempDir)) { Remove-Item  $tempDir -Force -Recurse | Out-Null; }
 New-Item -ItemType Directory -Path $tempDir -ErrorAction SilentlyContinue | Out-Null;
 
-# Grab the log files and export
+## Get System Information
+Write-Host "`nGetting System Info"
+Get-ComputerInfo | ConvertTo-JSON | Out-File -FilePath "$($TempDir)\ComputerInfo.json";
+
+Write-Host "`nGetting TCP,IP,Schannel,CipherSuite settings"
+
+## Get Schannel Registry Settings
+Get-ChildItem -Recurse "REGISTRY::HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL" | Out-File -FilePath $TempDir\SCHANNEL.txt | Out-Null;
+
+## Get SSL Config
+Get-ChildItem -Recurse "REGISTRY::HKLM\SYSTEM\CurrentControlSet\Control\Cryptography\Configuration\Local\SSL" | Out-File -FilePath $TempDir\SSL.txt | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL" | Out-File -FilePath $TempDir\SSL.txt -Append | Out-Null;
+
+## Get FIPS Config
+Get-ChildItem -Recurse "REGISTRY::HKLM\SYSTEM\CurrentControlSet\Control\LSA\FIPSAlgorithmPolicy" | Out-File -FilePath $TempDir\FIPS.txt | Out-Null;
+
+## Output DNS Cache
+Get-DnsClientCache | Select * | Out-File -FilePath $TempDir\DNSCache.txt | Out-Null;
+
+## Get .NET Config
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v2.0.50727" | Out-File -FilePath $TempDir\NET2.txt | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319" | Out-File -FilePath $TempDir\NET4.txt | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v2.0.50727" | Out-File -FilePath $TempDir\NET2.txt -Append | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v4.0.30319" | Out-File -FilePath $TempDir\NET4.txt -Append | Out-Null;
+
+## Get Cipher Suites
+Get-TlsCipherSuite | ConvertTo-JSON | Out-File "$($TempDir)\CipherSuites.json" | Out-Null;
+
+## Get TCP Settings
+Get-NetTCPSetting | Out-File -FilePath "$($TempDir)\TCPSetting.txt" | Out-Null;
+
+## Get NetIP Config
+Get-NetIPConfiguration -Detailed | Out-File -FilePath "$($TempDir)\NetIPConfig.txt" | Out-Null;
+
+# Grab the event log files and export
 ForEach ($logFileName in $logs) {
     If(Get-WinEvent -LogName $logFileName -ErrorAction SilentlyContinue | Select -First 1) {
     

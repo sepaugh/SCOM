@@ -37,10 +37,10 @@ Get-DnsClientCache | Select * | Out-File -FilePath "$($TempDir)\Config\DNSCache.
 
 ## Get .NET Config
 Write-Host "    .NET Framework"
-Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v2.0.50727" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v2.0.50727.txt" | Out-Null;
-Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v4.0.30319.txt" | Out-Null;
-Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v2.0.50727" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v2.0.50727.txt" -Append | Out-Null;
-Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v4.0.30319" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v4.0.30319.txt" -Append | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v2.*" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v2.txt" | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.*" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v4.txt" | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v2.*" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v2.txt" -Append | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\.NETFramework\v4.*" | Out-File -FilePath "$($TempDir)\Config\NETFramework_v4.txt" -Append | Out-Null;
 
 ## Get Cipher Suites
 Write-Host "    Cipher Suites"

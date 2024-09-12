@@ -16,6 +16,12 @@ New-Item -ItemType Directory -Path "$($tempDir)\Config" -ErrorAction SilentlyCon
 Write-Host "`nGetting System Info"
 Get-ComputerInfo | ConvertTo-JSON | Out-File -FilePath "$($TempDir)\ComputerInfo.json";
 
+## Get SCOM Info
+Write-Host "Getting SCOM registry info"
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\Microsoft Operations Manager" | Out-File -FilePath "$($TempDir)\Config\Microsoft Operations Manager Reg.txt" | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center" | Out-File -FilePath "$($TempDir)\Config\System Center Reg.txt" | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center Operations Manager" | Out-File -FilePath "$($TempDir)\Config\System Center Operations Manager Reg.txt" | Out-Null;
+
 Write-Host "Getting .NET and Networking settings"
 
 ## Get Schannel Registry Settings

@@ -19,6 +19,7 @@ Get-ComputerInfo | ConvertTo-JSON | Out-File -FilePath "$($TempDir)\ComputerInfo
 ## Get SCOM Info
 Write-Host "Getting SCOM registry info"
 Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\Microsoft Operations Manager" | Out-File -FilePath "$($TempDir)\Config\Microsoft Operations Manager Reg.txt" | Out-Null;
+Get-ChildItem -Recurse "REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\HealthService" | Out-File -FilePath "$($TempDir)\Config\HealthService Reg.txt" | Out-Null;
 Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center" | Out-File -FilePath "$($TempDir)\Config\System Center Reg.txt" | Out-Null;
 Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center Operations Manager" | Out-File -FilePath "$($TempDir)\Config\System Center Operations Manager Reg.txt" | Out-Null;
 

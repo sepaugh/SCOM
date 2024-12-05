@@ -14,7 +14,7 @@ This command runs the script and opens a GUI for selecting and importing a certi
 
 .NOTES
 Author: Lorne Sepaugh
-Date: 2023-10-05
+Date: 2024-10-05
 Version: 1.0
 
 #>

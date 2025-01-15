@@ -23,6 +23,16 @@ Get-ChildItem -Recurse "REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\HealthS
 Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center" | Out-File -FilePath "$($TempDir)\Config\System Center Reg.txt" | Out-Null;
 Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center Operations Manager" | Out-File -FilePath "$($TempDir)\Config\System Center Operations Manager Reg.txt" | Out-Null;
 
+
+Write-Host "Getting SCOM Config File"
+## Backup Config File
+try {
+    Copy-Item -Path "$InstallDir\ConfigService.config" -Destination "$($TempDir)\Config\ConfigService.config.$timestamp"    
+}
+catch {
+    Write-Error "Failed to backup the ConfigService.config file."
+}
+
 Write-Host "Getting .NET and Networking settings"
 
 ## Get Schannel Registry Settings

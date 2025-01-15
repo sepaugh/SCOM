@@ -1,13 +1,15 @@
-<####
+<#
+.SYNOPSIS
+    This script rebuilds the Windows Performance Counters on the current machine.
 
-This script will rebuild the Windows Performance Counters 
-on the current machine. 
+.DESCRIPTION
+    This script stops the necessary services, deletes old performance counter files, rebuilds the performance counters, resyncs them, and restarts the services. It also prompts the user to restart the computer to apply the changes.
 
-Make sure to run as a user with administrative privileges.
+.NOTES
+    Make sure to run this script as a user with administrative privileges.
+    Run at your own risk.
 
-Run at your own risk.
-
-####> 
+#>
 
 # Stop services
 Stop-Service pla -Force -Verbose
@@ -31,7 +33,8 @@ cd c:\Windows\System32
 
 cd c:\Windows\SysWOW64
     lodctr /R
-
+    lodctr /R # Do it again just in case
+    
 # Resync Performance Counters
 Write-Host "`nResyncing Performance Counters...`n" -ForegroundColor Yellow
 
@@ -47,15 +50,39 @@ Start-Sleep -Seconds 5
 # Restart Services
 Write-Host "`nRestarting Services...`n"  -ForegroundColor Yellow
 
-Start-Service pla -Verbose
-Stop-Service Winmgmt -Force -Verbose
-Start-Service winmgmt,UALSVC,iphlpsvc,ccmexec -Verbose
+#Start-Service pla -Verbose
+#Stop-Service Winmgmt -Force -Verbose
+#Start-Service winmgmt,UALSVC,iphlpsvc,ccmexec -Verbose
+
+Restart-Service -Name winmgmt,pla -Force -PassThru -Verbose
 
 "`n"
-Write-Warning "We will now reboot the machine. If you do not want to, exit the script!`n"
 
-Pause #Waits for user input on newer PS versions, skips for old
+# Prompt user to restart
+Write-Warning "It is recommended to reboot the machine to apply changes.`n"
 
-# Restart 
-Restart-Computer -Force 
+function Prompt-Restart {
+    $choice = Read-Host "Do you want to restart the computer now? (Yes or No/N)"
+    
+    switch ($choice.ToUpper()) {
+        'YES' {
+            Write-Host "Restarting the computer..."
+            Restart-Computer -Force
+        }
+        'NO' {
+            Write-Host "Exiting without restarting."
+        }
+        'N' {
+            Write-Host "Exiting without restarting."
+        }
+        default {
+            Write-Error "Invalid input. Please enter Yes/Y or No/N."
+            Prompt-Restart
+        }
+    }
+}
+
+# Call the function
+Prompt-Restart
+
 

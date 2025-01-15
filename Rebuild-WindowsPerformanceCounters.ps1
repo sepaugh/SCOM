@@ -50,10 +50,6 @@ Start-Sleep -Seconds 5
 # Restart Services
 Write-Host "`nRestarting Services...`n"  -ForegroundColor Yellow
 
-#Start-Service pla -Verbose
-#Stop-Service Winmgmt -Force -Verbose
-#Start-Service winmgmt,UALSVC,iphlpsvc,ccmexec -Verbose
-
 Restart-Service -Name winmgmt,pla -Force -PassThru -Verbose
 
 "`n"
@@ -67,7 +63,7 @@ function Prompt-Restart {
     switch ($choice.ToUpper()) {
         'YES' {
             Write-Host "Restarting the computer..."
-            Restart-Computer -Force
+            Restart-Computer -Force -Confirm
         }
         'NO' {
             Write-Host "Exiting without restarting."
@@ -76,7 +72,7 @@ function Prompt-Restart {
             Write-Host "Exiting without restarting."
         }
         default {
-            Write-Error "Invalid input. Please enter Yes/Y or No/N."
+            Write-Error "Invalid input. Please enter Yes or No/N."
             Prompt-Restart
         }
     }

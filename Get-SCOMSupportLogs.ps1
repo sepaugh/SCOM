@@ -25,6 +25,13 @@ Get-ChildItem -Recurse "REGISTRY::HKLM\SOFTWARE\Microsoft\System Center Operatio
 
 
 Write-Host "Getting SCOM Config File"
+## Get the management server installation directory
+try {
+    $InstallDir = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\3.0\Setup" -Name InstallDirectory
+} catch {
+    Write-Error "Failed to retrieve the installation directory from the registry."
+}
+
 ## Backup Config File
 try {
     Copy-Item -Path "$InstallDir\ConfigService.config" -Destination "$($TempDir)\Config\ConfigService.config.$timestamp"    

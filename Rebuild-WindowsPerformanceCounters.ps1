@@ -24,6 +24,21 @@ If (Test-Path C:\Windows\System32\perf*009.dat.*) {
 Get-Item C:\Windows\System32\perf*009.dat -Force | Rename-Item -NewName { $_.Name -replace '.dat','.dat.old' } -Verbose -Force
 #Get-Item C:\Windows\System32\perf*009.dat.old -Force | Rename-Item -NewName { $_.Name -replace '.dat.old','.dat' } -Verbose -Force ## Use this to restore the old files
 
+# Search for services that have a Performance subkey, locate the registry key, and remove specified values
+Write-Host "`nRemoving values from Performance subkeys for services that have it`n" -ForegroundColor Yellow
+
+$services = Get-ChildItem -Path "HKLM:\System\CurrentControlSet\Services"
+
+foreach ($service in $services) {
+    $performanceKeyPath = "HKLM:\System\CurrentControlSet\Services\$($service.PSChildName)\Performance"
+    if (Test-Path $performanceKeyPath) {
+        Remove-ItemProperty -Path $performanceKeyPath -Name "First Counter" -ErrorAction SilentlyContinue
+        Remove-ItemProperty -Path $performanceKeyPath -Name "First Help" -ErrorAction SilentlyContinue
+        Remove-ItemProperty -Path $performanceKeyPath -Name "Last Counter" -ErrorAction SilentlyContinue
+        Remove-ItemProperty -Path $performanceKeyPath -Name "Last Help" -ErrorAction SilentlyContinue
+    }
+}
+
 # Rebuild Perf Counters
 Write-Host "`nRebuilding Performance Counters...`n"  -ForegroundColor Yellow
 

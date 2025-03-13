@@ -109,7 +109,6 @@ else { ## If PrincipalName is NOT null...
     ## Log our luck
     $logContent+= "[$(Get-Date)]:: PrincipalName is present: $($alert.PrincipalName)"
 
-    ## Set alert resolution state so that the connector will pick it up
     ## Update the alert with the client name
     try {
         $alert | Set-SCOMAlert -CustomField1 $alert.PrincipalName

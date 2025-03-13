@@ -108,7 +108,8 @@ else { ## If PrincipalName is NOT null...
     
     ## Log our luck
     $logContent+= "[$(Get-Date)]:: PrincipalName is present: $($alert.PrincipalName)"
-
+    $logContent+= "[$(Get-Date)]:: Setting CustomField1 to value: $($alert.PrincipalName)"
+    
     ## Update the alert with the client name
     try {
         $alert | Set-SCOMAlert -CustomField1 $alert.PrincipalName

@@ -76,7 +76,7 @@ if ($alert.PrincipalName -eq $null) { ## If PrincipalName is null...
         }
     }
 
-    Add-Content -Path $content -Value "1"
+    #Add-Content -Path $content -Value "1"
 
     If ($clientName -eq ''){
         $logContent+= "[$(Get-Date)]:: Client name was not found in the alert details. We will not update the ticket."
